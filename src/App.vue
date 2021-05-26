@@ -1,28 +1,49 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- ora il dato lo spediamo con una props al header -->
+    <Header :genreList="genreList"
+            @startSearch="startSearch" />
+
+    <!-- qui ricevio il dato -->
+    <Main 
+          :genreToSearch="genreToSearch"
+          @onGenreList="getGenreList"
+        />
+
   </div>
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Main from './components/Main.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    Header,
+    Main,
+  },
+   /* quando si riceve un dato, bisogna sempre salvarlo */
+  data(){
+    return{
+      genreList:[],
+      genreToSearch: ''
+    }
+  },
+  methods:{
+    getGenreList(genreList){
+        /* ricevo i dati e li salvo in genreList */
+        this.genreList = genreList;
+        console.log('---->',genreList)
+    },   /* la funzione mi richiama il dato che mi interessa, in questo caso genreList che si trova in main */
+    startSearch(genreToSearch){
+      this.genreToSearch = genreToSearch;
+    }
+}}
 </script>
-
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
+@import '@/assets/style/general.scss';
+
 </style>
